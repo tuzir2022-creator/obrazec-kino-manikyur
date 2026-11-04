@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F3E7E4">
+<title>Студия маникюра «Лепесток» - онлайн-запись</title>
+<meta name="description" content="Образец в стиле «Кино»: скролл-сцены, лента услуг и онлайн-запись с выбором мастера и свободного времени.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="vibe.css">
+<style>
+/* Образец «Кино × Лепесток». Стиль: скролл-сцены движка vibe (Галерея 45, VS-04). Палитра «Б · пудра + графит».
+   Шрифты Comfortaa + Nunito (кириллица, свободная лицензия). Запись работает на нашем API с базой D1. */
+:root {
+  --color-paper: #F3E7E4;
+  --color-paper-rgb: 243 231 228;
+  --color-surface: #FBF6F4;
+  --color-ink: #2B292E;
+  --color-muted: #645B62;
+  --color-line: #E0CFCB;
+  --color-accent: #34313A;
+  --color-accent-hover: #221F27;
+  --color-accent-deep: #8C4B55;
+  --color-accent-soft: #EBD9D5;
+  --color-accent-ink: #F8F0EE;
+  --color-err: #8A2412;
+  --color-err-bg: #F6DDD6;
+  --color-warn: #8F7212;
+  --color-focus: #1D4ED8;
+  --font-display: "Comfortaa", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius-s: 12px; --radius-m: 20px; --radius-l: 28px;
+}
+html, body { margin: 0; background: var(--color-paper); overflow-x: clip; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+[hidden] { display: none !important; }
+/* Токены движка «Кино» берут наши значения */
+.v-page {
+  --v-canvas: var(--color-paper); --v-surface: var(--color-surface);
+  --v-ink: var(--color-ink); --v-ink-soft: var(--color-muted);
+  --v-accent: var(--color-accent); --v-accent-ink: var(--color-accent-ink);
+  --v-font-display: var(--font-display); --v-font-text: var(--font-body);
+  --v-shadow-color: 70 40 48; --v-radius: 18px; --v-track-tight: -0.02em;
+  --v-t-xs: clamp(0.8125rem, 0.79rem + 0.15vw, 0.85rem);
+  --v-t-sm: clamp(0.9375rem, 0.9rem + 0.2vw, 1rem);
+  padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right);
+}
+.v-page button, .v-page input { font-family: inherit; }
+.v-page :focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+.warn { color: var(--color-warn); }
+.nd { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.02em; overflow-wrap: anywhere; }
+
+/* Шапка */
+.bar { position: fixed; inset: 0 0 auto 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: var(--v-4);
+  padding: var(--v-3) max(var(--v-gutter), env(safe-area-inset-left)); padding-top: calc(var(--v-3) + env(safe-area-inset-top));
+  background: rgb(var(--color-paper-rgb) / .88); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--v-hair); }
+.bar__mark { font: 700 var(--v-t-base) var(--font-display); text-decoration: none; display: inline-flex; align-items: center; gap: .5em; color: var(--color-accent-deep); white-space: nowrap; }
+.bar__mark i { width: .55em; height: .55em; border-radius: 50%; background: var(--color-accent-deep); display: inline-block; }
+.index { display: flex; gap: var(--v-6); font-size: var(--v-t-sm); }
+.index a { text-decoration: none; color: var(--v-ink-soft); padding-block: .3em; white-space: nowrap; }
+.index a:hover { color: var(--v-ink); }
+.bar .v-btn { padding: .7em 1.2em; }
+@media (max-width: 600px) { .index { display: none; } }
+
+/* Сцена 1: закреплённый первый экран */
+/* Фото-панель справа на десктопе, сверху на телефоне; текст на чистой бумаге */
+.panel { position: absolute; z-index: 1; top: 0; right: 0; bottom: 0; width: 54%; overflow: hidden; background: var(--color-accent-soft); border-bottom-left-radius: var(--radius-l); border-top-left-radius: var(--radius-l); }
+.plx { position: absolute; inset: -6% 0; will-change: transform; }
+.plx img { width: 100%; height: 100%; object-fit: cover; display: block; max-width: none; }
+@media (max-width: 860px) {
+  .panel { left: 0; width: auto; bottom: auto; height: 46%; border-radius: 0 0 var(--radius-l) var(--radius-l); }
+}
+@media (max-width: 860px) and (max-height: 720px) { .panel { height: 40%; } }
+.v-page .hero-h { font-size: clamp(2rem, 1.1rem + 3.2vw, 3.8rem); line-height: 1.1; margin: 0 0 var(--v-4); }
+.v-page .hero-p { color: var(--v-ink-soft); font-size: var(--v-t-lg); max-width: 32ch; margin: 0 0 var(--v-5); }
+.scene .v-copy { z-index: 3; max-width: min(36rem, 38vw); top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; padding-top: 4rem; }
+@media (max-width: 860px) {
+  .scene .v-copy { max-width: none; top: auto; bottom: clamp(1.25rem, 5vh, 3rem); padding-top: 0; justify-content: flex-end; left: var(--v-gutter); right: var(--v-gutter); }
+  .v-page .hero-h { font-size: clamp(1.8rem, 1.2rem + 3.4vw, 2.6rem); margin-bottom: var(--v-3); }
+  .v-page .hero-p { font-size: var(--v-t-base); margin-bottom: var(--v-4); }
+}
+.hero-cta { display: flex; gap: var(--v-3); flex-wrap: wrap; align-items: center; }
+.scroll-hint { position: absolute; z-index: 3; right: var(--v-gutter); bottom: clamp(1.5rem, 5vh, 3rem); font-size: var(--v-t-xs); color: var(--v-ink); opacity: .75; letter-spacing: .04em; }
+@media (max-width: 860px) { .scroll-hint { display: none; } }
+
+/* Сцена 2: лента услуг */
+.gal { display: flex; flex-direction: column; justify-content: center; height: 100%; padding-top: 4.5rem; }
+.gal__rail { padding-inline: var(--v-gutter); align-items: flex-start; gap: clamp(1rem, 2.5vw, 2.5rem); }
+.gal__intro { flex: none; width: clamp(17rem, 28vw, 26rem); padding-top: clamp(.5rem, 4vh, 3rem); padding-right: var(--v-6); }
+.gal__intro h2 { font-size: clamp(1.8rem, 1.1rem + 1.9vw, 2.6rem); line-height: 1.1; margin: 0 0 var(--v-4); }
+.gal__intro p { color: var(--v-ink-soft); max-width: 30ch; margin: 0 0 var(--v-5); }
+.work { flex: none; width: min(clamp(230px, 24vw, 330px), calc((100svh - 14rem) * .75)); }
+.work__card { display: block; background: var(--color-surface); border-radius: var(--v-radius); overflow: hidden; box-shadow: var(--v-e1); }
+.work__card img { width: 100%; height: auto; aspect-ratio: 3 / 4; object-fit: cover; display: block; background: var(--color-accent-soft); }
+.work__cap { padding: var(--v-4) var(--v-1) 0; display: grid; gap: var(--v-1); }
+.work__cap h3 { margin: 0; font: 700 var(--v-t-lg) var(--font-display); letter-spacing: -0.01em; }
+.work__cap p { margin: 0; color: var(--v-ink-soft); font-size: var(--v-t-sm); }
+.work__cap b { color: var(--v-ink); font-weight: 700; }
+.work__cap .v-btn { margin-top: var(--v-3); justify-self: start; }
+@media (max-width: 860px) {
+  .gal__intro { width: 62vw; padding-right: var(--v-3); padding-top: 0; }
+  .work { width: min(66vw, 17rem); }
+}
+@media (pointer: coarse) {
+  .gal { height: auto; padding-top: 5rem; padding-bottom: var(--v-5); display: block; }
+  .gal__intro { width: min(100%, 34rem); padding: 0 var(--v-gutter); margin-bottom: var(--v-5); }
+  .gal__rail { padding-inline: var(--v-gutter); }
+}
+
+/* Блок «как это работает» */
+.facts-sec .v-wrap { display: grid; gap: var(--v-6); }
+.facts-sec h2 { font-size: clamp(1.8rem, 1.1rem + 1.9vw, 2.6rem); line-height: 1.1; margin: 0; }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--v-4); list-style: none; padding: 0; margin: 0; }
+.facts li { padding: var(--v-5); border-radius: var(--v-radius); background: var(--color-surface); box-shadow: var(--v-e1); }
+.facts b { display: block; font: 700 var(--v-t-lg) var(--font-display); margin-bottom: var(--v-2); }
+.facts span { color: var(--v-ink-soft); }
+@media (max-width: 860px) { .facts { grid-template-columns: minmax(0, 1fr); } }
+
+/* Запись */
+.zapis .v-wrap { width: min(100% - 2 * var(--v-gutter), 44rem); display: grid; gap: var(--v-5); }
+.zapis h2 { font-size: clamp(1.8rem, 1.1rem + 1.9vw, 2.6rem); line-height: 1.1; margin: 0; }
+.mine { padding: var(--v-4); border-radius: var(--v-radius); background: var(--color-accent-soft); display: grid; gap: var(--v-2); }
+.mine h3 { margin: 0; font: 700 1rem/1.3 var(--font-display); }
+.mine p { margin: 0; }
+.card { background: var(--color-surface); border-radius: var(--radius-l); padding: var(--v-4); box-shadow: var(--v-e1); min-width: 0; }
+@media (min-width: 560px) { .card { padding: var(--v-5); } }
+.step { border-bottom: 1px solid var(--color-line); padding: var(--v-4) 0; }
+.step:last-of-type { border-bottom: 0; }
+.step-head { display: flex; align-items: center; gap: var(--v-4); min-width: 0; }
+.badge { flex: none; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--color-paper); color: var(--color-muted); font: 700 1rem var(--font-display); }
+.step.active .badge, .step.done .badge { background: var(--color-accent); color: var(--color-accent-ink); }
+.step-title { margin: 0; font: 700 1.125rem/1.25 var(--font-display); flex: 1; min-width: 0; }
+.step.locked .step-title { color: var(--color-muted); font-weight: 500; }
+.step-val { margin: 2px 0 0; color: var(--color-muted); font-size: .9375rem; overflow-wrap: anywhere; }
+.link { flex: none; min-height: 40px; padding: 0 var(--v-2); border: 0; background: transparent; color: var(--color-accent-deep); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; cursor: pointer; }
+.step-body { margin-top: var(--v-4); }
+.opts { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--v-2); }
+@media (min-width: 560px) { .opts.two { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.opt { display: flex; align-items: center; gap: var(--v-4); width: 100%; text-align: left; padding: var(--v-4); border-radius: var(--radius-m); border: 2px solid var(--color-line); background: var(--color-surface); min-height: 64px; cursor: pointer; transition: border-color .14s, background .14s; }
+.opt:hover { border-color: var(--color-accent); }
+.opt[aria-pressed="true"] { border-color: var(--color-accent); background: var(--color-accent-soft); }
+.opt-main { flex: 1; min-width: 0; }
+.opt-name { display: block; font-weight: 700; }
+.opt-sub { display: block; color: var(--color-muted); font-size: .9375rem; }
+.opt-price { font-weight: 700; white-space: nowrap; }
+.opt-img { flex: none; width: 64px; height: 64px; border-radius: var(--radius-s); object-fit: cover; background: var(--color-accent-soft); display: block; }
+@media (max-width: 380px) { .opt-img { width: 52px; height: 52px; } }
+.ava { flex: none; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--color-accent-soft); color: var(--color-accent-deep); font: 700 1.125rem var(--font-display); }
+.days { display: flex; gap: var(--v-2); overflow-x: auto; padding-bottom: var(--v-2); margin: 0 calc(var(--v-4) * -1); padding-left: var(--v-4); padding-right: var(--v-4); scrollbar-width: thin; }
+@media (min-width: 560px) { .days { margin: 0; padding-left: 0; padding-right: 0; } }
+.day { flex: none; width: 64px; min-height: 76px; border-radius: var(--radius-m); border: 2px solid var(--color-line); background: var(--color-surface); display: grid; place-items: center; align-content: center; gap: 2px; cursor: pointer; }
+.day b { font: 700 1.375rem/1 var(--font-display); }
+.day span { color: var(--color-muted); font-size: .8125rem; }
+.day[aria-pressed="true"] { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-accent-ink); }
+.day[aria-pressed="true"] span { color: var(--color-accent-ink); }
+.times { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: var(--v-2); margin-top: var(--v-4); }
+.time { min-height: 44px; border-radius: 999px; border: 2px solid var(--color-line); background: var(--color-surface); font-weight: 700; white-space: nowrap; cursor: pointer; }
+.time:hover { border-color: var(--color-accent); }
+.time[aria-pressed="true"] { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-accent-ink); }
+.v-page .hint { margin: var(--v-4) 0 0; color: var(--color-muted); font-size: .9375rem; }
+.form { display: grid; gap: var(--v-4); }
+.field { display: grid; gap: var(--v-1); }
+.field label { font-weight: 700; font-size: .9375rem; }
+.field input[type="text"], .field input[type="tel"] { min-height: 52px; padding: 0 var(--v-4); border-radius: var(--radius-s); border: 2px solid var(--color-line); background: var(--color-surface); font-size: 1rem; width: 100%; }
+.field input:focus { border-color: var(--color-accent); }
+.consent { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: var(--v-2); align-items: start; padding: var(--v-4); border-radius: var(--radius-m); background: var(--color-paper); font-size: .9375rem; }
+.consent input { width: 24px; height: 24px; margin: 2px 0 0; accent-color: var(--color-accent); }
+.consent a { color: var(--color-accent-deep); }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 var(--v-5); border-radius: 999px; border: 2px solid var(--color-ink); background: transparent; font-weight: 700; white-space: nowrap; cursor: pointer; }
+.btn:active { transform: translateY(1px); }
+.btn-primary { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-accent-ink); }
+.btn-primary:hover:not([disabled]) { background: var(--color-accent-hover); }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+.msg { margin: 0; padding: var(--v-2) var(--v-4); border-radius: var(--radius-s); font-size: .9375rem; }
+.msg.err { background: var(--color-err-bg); color: var(--color-err); }
+.ticket { display: grid; gap: var(--v-4); }
+.ticket h3 { margin: 0; font: 700 1.5rem/1.2 var(--font-display); }
+.ticket dl { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--v-1) var(--v-4); }
+.ticket dt { color: var(--color-muted); }
+.ticket dd { margin: 0; font-weight: 700; }
+.ticket .acts { display: grid; gap: var(--v-2); }
+
+/* Подвал */
+.foot { padding: var(--v-7) var(--v-gutter) calc(var(--v-7) + env(safe-area-inset-bottom)); }
+.foot .demo-note { margin: 0 auto; max-width: 56rem; padding: var(--v-4); border-radius: var(--radius-m); background: var(--color-surface); color: var(--color-muted); font-size: .875rem; }
+.foot .demo-note a { color: var(--color-ink); }
+</style>
+</head>
+<body>
+<div class="v-page" id="page">
+  <div data-v-progress></div>
+
+  <header class="bar">
+    <a class="bar__mark" href="#top"><i></i><span>Лепесток</span></a>
+    <nav class="index" aria-label="Разделы"><a href="#uslugi">Услуги</a><a href="#zapis">Запись</a></nav>
+    <a class="v-btn" href="#zapis">Записаться</a>
+  </header>
+
+  <!-- Сцена 1: первый экран закреплён, фото сменяется шторкой -->
+  <section id="top" class="scene" data-v-act="pin" data-v-span="2.2">
+    <div data-v-stage>
+      <div class="panel"><div class="plx" data-v-parallax="-0.5"><img src="assets/scene-hero.webp" alt="Аккуратный французский маникюр" width="1200" height="1400" fetchpriority="high"></div></div>
+      <div class="panel" data-v-reveal="up" data-v-reveal-at="0.42 0.85"><div class="plx" data-v-parallax="-0.4"><img src="assets/scene-salon.webp" alt="Мастер работает над маникюром" width="1200" height="1400"></div></div>
+
+      <div class="v-copy v-copy--lead" data-v-cue="0 0.5 0 0.2">
+        <h1 class="hero-h nd" data-v-kinetic="words">Запишитесь на маникюр за минуту</h1>
+        <p class="hero-p">Выберите услугу, мастера и свободное время. Звонить и ждать ответа в мессенджере не нужно.</p>
+        <div class="hero-cta"><a class="v-btn" href="#zapis">Записаться онлайн</a><a class="v-btn v-btn--ghost" href="#uslugi">Услуги и цены</a></div>
+      </div>
+      <div class="v-copy v-copy--lead" data-v-cue="0.56">
+        <h2 class="hero-h nd">Свободное время видно сразу</h2>
+        <p class="hero-p">Занятые окна пропадают в тот же момент. Если планы изменились, запись можно отменить самому, не позже чем за 24 часа.</p>
+        <div class="hero-cta"><a class="v-btn" href="#zapis">Выбрать время</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Сцена 2: лента услуг -->
+  <section id="uslugi" data-v-act="pan" data-v-span="2.2" data-v-drift="#efdfdb" aria-label="Услуги и цены">
+    <div data-v-stage>
+      <div class="gal">
+        <div class="gal__rail" data-v-pan="0.04" id="ribbon"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Как это устроено -->
+  <section class="v-section facts-sec">
+    <div class="v-wrap">
+      <h2 class="nd" data-v-in data-v-in-self>Как устроена запись</h2>
+      <ul class="facts" data-v-in data-v-stagger="90">
+        <li><b>Только свободное</b><span>Список времени строится по расписанию мастера. Занятое вы не увидите, и записаться на него нельзя.</span></li>
+        <li><b>Отмена за 24 часа</b><span>Запись можно отменить самому, не звоня. Позже чем за сутки онлайн-отмена закрывается.</span></li>
+        <li><b>Телефон только для записи</b><span>Он нужен, чтобы подтвердить и при необходимости отменить запись. Ставите согласие галочкой, и ничего лишнего.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Запись -->
+  <section id="zapis" class="v-section zapis">
+    <div class="v-wrap">
+      <h2 class="nd" data-v-in data-v-in-self>Онлайн-запись</h2>
+      <div class="mine" id="mine" hidden></div>
+      <div class="card" id="wizard" aria-label="Онлайн-запись"></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <p class="demo-note">Образец в стиле «Кино» (скролл-сцены, палитра «пудра + графит»). Демонстрационный макет, не является официальным сайтом организации. Услуги, цены и мастера условные, фотографии стоковые (Unsplash, свободная лицензия) <span class="warn">&lt;&lt;запросить у заказчика: фото работ и студии, график и адрес&gt;&gt;</span>. Запись попадает на тестовую <a href="admin.html">панель мастера</a>. Напоминания клиенту в демо не отправляются. Вводите вымышленный номер: данные хранятся 7 дней и удаляются.</p>
+  </footer>
+</div>
+
+<script src="vibe.js"></script>
+<script>
+"use strict";
+const API = "https://zerno-lepestok-api.tuzir2022.workers.dev";
+
+/* ---------- Логгер ---------- */
+const log = (() => {
+  const L = { debug: 10, info: 20, warn: 30, error: 40 };
+  const min = location.hash.includes("debug") ? "debug" : "warn";
+  const emit = (level, msg, ctx) => { if (L[level] >= L[min]) console[level === "debug" ? "log" : level](JSON.stringify({ ts: new Date().toISOString(), level, scope: "lepestok-kino", msg, ...ctx })); };
+  return { debug: (m, c) => emit("debug", m, c), info: (m, c) => emit("info", m, c), warn: (m, c) => emit("warn", m, c), error: (m, e, c) => emit("error", m, { ...c, error: { name: e?.name, message: e?.message, stack: e?.stack } }) };
+})();
+
+/* ---------- Справочники (условные) ---------- */
+const SERVICES = [
+  { id: "gel", name: "Маникюр с гель-лаком", min: 120, price: 2200 },
+  { id: "classic", name: "Маникюр классический", min: 60, price: 1500 },
+  { id: "pedicure", name: "Педикюр", min: 90, price: 2500 },
+  { id: "combo", name: "Снятие и маникюр", min: 90, price: 1800 },
+];
+const MASTERS = [
+  { id: "anna", name: "Анна", note: "Все услуги", services: ["gel", "classic", "pedicure", "combo"] },
+  { id: "maria", name: "Мария", note: "Маникюр", services: ["gel", "classic", "combo"] },
+  { id: "elena", name: "Елена", note: "Классика и педикюр", services: ["classic", "pedicure"] },
+];
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const money = (n) => n.toLocaleString("ru-RU") + " ₽";
+const dur = (m) => (m >= 60 ? Math.floor(m / 60) + " ч" + (m % 60 ? " " + (m % 60) + " мин" : "") : m + " мин");
+const svc = (id) => SERVICES.find((s) => s.id === id);
+const mst = (id) => MASTERS.find((m) => m.id === id);
+function store(op, k, v) { try { return op === "get" ? localStorage.getItem(k) : op === "del" ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch { return null; } }
+
+/* ---------- Даты (по времени Ижевска, UTC+4) ---------- */
+const izhNow = () => new Date(Date.now() + 4 * 3600 * 1000);
+const isoDay = (d) => d.toISOString().slice(0, 10);
+function days(n) {
+  const base = izhNow();
+  return Array.from({ length: n }, (_, i) => { const d = new Date(base.getTime() + i * 86400000); return { iso: isoDay(d), dow: d.toLocaleDateString("ru-RU", { weekday: "short", timeZone: "UTC" }), num: d.getUTCDate(), month: d.toLocaleDateString("ru-RU", { month: "long", timeZone: "UTC" }) }; });
+}
+const dayLabel = (iso) => new Date(iso + "T00:00:00Z").toLocaleDateString("ru-RU", { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" });
+
+/* ---------- Лента услуг (сцена 2) ---------- */
+function renderRibbon() {
+  $("#ribbon").innerHTML = `
+    <div class="gal__intro">
+      <h2 class="nd">Услуги и цены</h2>
+      <p>Время и стоимость названы до записи. Нажмите на услугу, и мы перейдём к выбору мастера.</p>
+      <a class="v-btn" href="#zapis">К записи</a>
+    </div>` + SERVICES.map((s) => `
+    <article class="work">
+      <div class="work__card"><img src="assets/card-${s.id}.webp" alt="" width="640" height="800" decoding="async"></div>
+      <div class="work__cap">
+        <h3>${esc(s.name)}</h3>
+        <p><b>${money(s.price)}</b> · ${dur(s.min)}</p>
+        <button class="v-btn v-btn--ghost" type="button" data-pick="${s.id}">Записаться</button>
+      </div>
+    </article>`).join("");
+}
+
+/* ---------- Состояние записи ---------- */
+const S = { step: 1, service: null, master: null, date: null, time: null, free: null, loading: false, name: "", phone: "", consent: false, busy: false, error: "", ticket: null };
+
+async function api(path, body) {
+  const res = await fetch(API + path, body ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : undefined);
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) { const e = new Error(data.message || data.error || "http " + res.status); e.code = data.error; throw e; }
+  return data;
+}
+
+function stepHead(n, title, value) {
+  const done = S.step > n;
+  return `<div class="step-head"><span class="badge" aria-hidden="true">${done ? "✓" : n}</span>
+    <div style="flex:1;min-width:0"><h3 class="step-title">${title}</h3>${done && value ? `<p class="step-val">${value}</p>` : ""}</div>
+    ${done ? `<button class="link" type="button" data-back="${n}">Изменить</button>` : ""}</div>`;
+}
+function render() {
+  const w = $("#wizard");
+  if (S.ticket) { w.innerHTML = ticketHtml(); return; }
+  const s = svc(S.service), m = mst(S.master);
+  const cls = (n) => "step " + (S.step === n ? "active" : S.step > n ? "done" : "locked");
+
+  const s1 = `<div class="${cls(1)}">${stepHead(1, "Услуга", s ? `${esc(s.name)} · ${dur(s.min)} · ${money(s.price)}` : "")}
+    ${S.step === 1 ? `<div class="step-body opts">${SERVICES.map((x) => `<button class="opt" type="button" aria-pressed="${S.service === x.id}" data-service="${x.id}"><img class="opt-img" src="assets/${x.id}.webp" alt="" width="64" height="64" decoding="async"><span class="opt-main"><span class="opt-name">${esc(x.name)}</span><span class="opt-sub">${dur(x.min)}</span></span><span class="opt-price">${money(x.price)}</span></button>`).join("")}</div>` : ""}</div>`;
+
+  const avail = MASTERS.filter((x) => s && x.services.includes(s.id));
+  const s2 = `<div class="${cls(2)}">${stepHead(2, "Мастер", m ? esc(m.name) : "")}
+    ${S.step === 2 ? `<div class="step-body opts two">${avail.map((x) => `<button class="opt" type="button" aria-pressed="${S.master === x.id}" data-master="${x.id}"><span class="ava" aria-hidden="true">${esc(x.name[0])}</span><span class="opt-main"><span class="opt-name">${esc(x.name)}</span><span class="opt-sub">${esc(x.note)}</span></span></button>`).join("")}</div>` : ""}</div>`;
+
+  const dl = days(14);
+  let timesHtml = "";
+  if (S.step === 3 && S.date) {
+    if (S.loading) timesHtml = '<p class="hint">Смотрим свободное время...</p>';
+    else if (S.free === null) timesHtml = "";
+    else if (!S.free.length) timesHtml = '<p class="hint">На этот день свободного времени нет. Выберите другой день.</p>';
+    else timesHtml = `<div class="times" role="group" aria-label="Свободное время">${S.free.map((t) => `<button class="time" type="button" aria-pressed="${S.time === t}" data-time="${t}">${t}</button>`).join("")}</div><p class="hint">Время указано по Ижевску. Услуга займёт ${dur(s.min)}.</p>`;
+  }
+  const s3 = `<div class="${cls(3)}">${stepHead(3, "День и время", S.date ? `${esc(dayLabel(S.date))}, ${S.time}` : "")}
+    ${S.step === 3 ? `<div class="step-body"><div class="days" role="group" aria-label="День">${dl.map((d) => `<button class="day" type="button" aria-pressed="${S.date === d.iso}" data-date="${d.iso}" aria-label="${d.num} ${d.month}"><span>${d.dow}</span><b>${d.num}</b></button>`).join("")}</div>${timesHtml}${S.error ? `<p class="msg err" style="margin-top:16px">${esc(S.error)}</p>` : ""}${S.time ? '<div style="margin-top:16px"><button class="btn btn-primary" type="button" data-next-contacts>Дальше</button></div>' : ""}</div>` : ""}</div>`;
+
+  const ready = S.name.trim().length >= 2 && S.phone.replace(/\D/g, "").length === 11 && S.consent && !S.busy;
+  const s4 = `<div class="${cls(4)}">${stepHead(4, "Контакты", "")}
+    ${S.step === 4 ? `<form class="step-body form" id="form" novalidate>
+      <div class="field"><label for="name">Как вас зовут</label><input id="name" type="text" autocomplete="given-name" maxlength="60" value="${esc(S.name)}"></div>
+      <div class="field"><label for="phone">Телефон</label><input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00" value="${esc(S.phone)}"></div>
+      <label class="consent"><input type="checkbox" id="consent" ${S.consent ? "checked" : ""}><span>Я даю согласие на обработку моих персональных данных (имя и телефон) для записи на услугу и напоминания о визите. Прочитал(а) <a href="politika.html" target="_blank" rel="noopener">политику обработки данных</a>.</span></label>
+      ${S.error ? `<p class="msg err" id="err">${esc(S.error)}</p>` : ""}
+      <button class="btn btn-primary" id="submit" type="submit" ${ready ? "" : "disabled"}>${S.busy ? "Записываем..." : "Записаться"}</button>
+      <p class="hint" style="margin:0">Телефон нужен, чтобы подтвердить запись и отменить её, если планы изменятся.</p>
+    </form>` : ""}</div>`;
+
+  w.innerHTML = s1 + s2 + s3 + s4;
+}
+
+function ticketHtml() {
+  const t = S.ticket;
+  return `<div class="ticket">
+    <h3>Вы записаны</h3>
+    <dl><dt>Услуга</dt><dd>${esc(t.service)}</dd><dt>Мастер</dt><dd>${esc(t.master)}</dd><dt>Когда</dt><dd>${esc(dayLabel(t.date))}, ${esc(t.time)}</dd><dt>Стоимость</dt><dd>${money(t.price)}, оплата в студии</dd></dl>
+    <p class="hint" style="margin:0">В демо напоминание на телефон не отправляется. Отменить запись можно не позже чем за 24 часа до визита.</p>
+    ${S.error ? `<p class="msg err">${esc(S.error)}</p>` : ""}
+    <div class="acts"><button class="btn" type="button" data-cancel ${S.busy ? "disabled" : ""}>${S.busy ? "Отменяем..." : "Отменить запись"}</button><button class="btn btn-primary" type="button" data-again>Записаться ещё раз</button></div>
+  </div>`;
+}
+
+function renderMine() {
+  const raw = store("get", "lepestok.ticket");
+  const el = $("#mine");
+  if (!raw || S.ticket) { el.hidden = true; return; }
+  try {
+    const t = JSON.parse(raw);
+    if (new Date(t.date + "T00:00:00Z").getTime() < Date.now() - 86400000) { store("del", "lepestok.ticket"); el.hidden = true; return; }
+    el.hidden = false;
+    el.innerHTML = `<h3>Ваша запись</h3><p>${esc(t.service)}, ${esc(t.master)}, ${esc(dayLabel(t.date))}, ${esc(t.time)}</p><button class="btn" type="button" data-open-ticket style="min-height:44px">Открыть запись</button>`;
+  } catch { el.hidden = true; }
+}
+
+/* ---------- Действия ---------- */
+async function loadSlots() {
+  S.loading = true; S.free = null; S.time = null; S.error = ""; render();
+  try {
+    const r = await api(`/nails/slots?date=${S.date}&master=${S.master}&service=${S.service}`);
+    S.free = r.free;
+  } catch (e) {
+    log.error("slots_failed", e, { date: S.date, master: S.master });
+    S.free = null; S.error = "Не удалось загрузить время. Проверьте интернет и выберите день ещё раз.";
+  }
+  S.loading = false; render();
+}
+
+async function submit() {
+  S.busy = true; S.error = ""; render();
+  try {
+    const t = await api("/nails/book", { service: S.service, master: S.master, date: S.date, time: S.time, name: S.name, phone: S.phone, consent: S.consent });
+    log.info("booked", { id: t.id, date: t.date, time: t.time });
+    S.ticket = t; store("set", "lepestok.ticket", JSON.stringify({ ...t, phone: S.phone }));
+    S.busy = false; renderMine(); render(); $("#zapis").scrollIntoView({ behavior: "smooth" });
+  } catch (e) {
+    log.error("booking_failed", e, { date: S.date, time: S.time, master: S.master });
+    S.busy = false;
+    if (e.code === "slot_taken") { S.error = "Это время только что заняли. Выберите другое."; S.step = 3; S.time = null; S.free = null; render(); loadSlots(); return; }
+    S.error = e.code === "bad_phone" ? "Проверьте номер телефона." : e.code === "consent_required" ? "Нужно согласие на обработку данных." : "Не удалось записаться. Проверьте интернет и попробуйте ещё раз.";
+    render();
+  }
+}
+
+async function cancelTicket() {
+  let saved = null; try { saved = JSON.parse(store("get", "lepestok.ticket")); } catch {}
+  if (!saved) return;
+  S.busy = true; S.error = ""; render();
+  try {
+    await api("/nails/cancel", { id: saved.id, phone: saved.phone });
+    log.info("canceled", { id: saved.id });
+    store("del", "lepestok.ticket"); reset();
+  } catch (e) {
+    log.warn("cancel_failed", { code: e.code });
+    if (e.code === "not_found") { store("del", "lepestok.ticket"); reset(); return; }
+    S.busy = false;
+    S.error = e.code === "too_late" ? "До визита меньше 24 часов, отменить онлайн нельзя. Позвоните в студию." : "Не удалось отменить запись. Попробуйте ещё раз.";
+    render();
+  }
+}
+function reset() { Object.assign(S, { step: 1, service: null, master: null, date: null, time: null, free: null, loading: false, busy: false, error: "", ticket: null, consent: false }); render(); renderMine(); }
+
+/* ---------- События ---------- */
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("button"); if (!b) return;
+  const d = b.dataset;
+  if (d.pick) {
+    S.ticket = null; S.service = d.pick; S.master = null; S.date = null; S.time = null; S.free = null; S.error = ""; S.step = 2; render(); renderMine();
+    $("#zapis").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }
+  else if (d.service) { S.service = d.service; S.master = null; S.date = null; S.time = null; S.free = null; S.step = 2; render(); }
+  else if (d.master) { S.master = d.master; S.date = null; S.time = null; S.free = null; S.step = 3; render(); }
+  else if (d.date) { S.date = d.date; loadSlots(); }
+  else if (d.time) { S.time = d.time; render(); }
+  else if (d.back) { S.step = Number(d.back); S.error = ""; render(); }
+  else if (d.nextContacts !== undefined) { S.step = 4; S.error = ""; render(); }
+  else if (d.cancel !== undefined) cancelTicket();
+  else if (d.again !== undefined) reset();
+  else if (d.openTicket !== undefined) { try { S.ticket = JSON.parse(store("get", "lepestok.ticket")); } catch { return; } renderMine(); render(); }
+});
+document.addEventListener("input", (e) => {
+  if (e.target.id === "name") S.name = e.target.value;
+  else if (e.target.id === "phone") {
+    const dg = e.target.value.replace(/\D/g, "").replace(/^8/, "7");
+    const p = dg.startsWith("7") ? dg : "7" + dg;
+    const f = "+7" + (p.length > 1 ? " " + p.slice(1, 4) : "") + (p.length > 4 ? " " + p.slice(4, 7) : "") + (p.length > 7 ? "-" + p.slice(7, 9) : "") + (p.length > 9 ? "-" + p.slice(9, 11) : "");
+    S.phone = dg ? f : ""; e.target.value = S.phone;
+  } else if (e.target.id === "consent") S.consent = e.target.checked;
+  else return;
+  const btn = $("#submit"); if (btn) btn.disabled = !(S.name.trim().length >= 2 && S.phone.replace(/\D/g, "").length === 11 && S.consent && !S.busy);
+});
+document.addEventListener("submit", (e) => { if (e.target.id === "form") { e.preventDefault(); if (!$("#submit").disabled) submit(); } });
+window.addEventListener("error", (e) => log.error("window_error", e.error || new Error(e.message), { file: e.filename, line: e.lineno }));
+
+renderRibbon(); render(); renderMine();
+window.Vibe && Vibe.mount($("#page"));
+</script>
+</body>
+</html>
